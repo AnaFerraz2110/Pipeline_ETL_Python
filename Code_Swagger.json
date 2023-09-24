@@ -1,0 +1,123 @@
+openapi: 3.0.0
+info:
+  title: API de Medicamentos
+  version: 1.0.0
+paths:
+  /medicacoes:
+    get:
+      summary: Obter informações de medicação
+      description: Retorna informações sobre medicação.
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MedicationInfo'
+    post:
+      summary: Adicionar nova medicação
+      description: Adiciona uma nova entrada de medicação.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MedicationInput' # Use um esquema diferente para entrada
+      responses:
+        '201':
+          description: Criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MedicationInfo'
+  /medicacoes/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+    put:
+      summary: Atualizar informações de medicação
+      description: Atualiza informações de medicação existentes.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MedicationInfo'
+      responses:
+        '200':
+          description: Atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MedicationInfo'
+    delete:
+      summary: Excluir medicação
+      description: Exclui uma entrada de medicação.
+      responses:
+        '204':
+          description: Excluído com sucesso
+components:
+  schemas:
+    MedicationInput: # Schema para entrada de dados POST
+      type: object
+      properties:
+        Nome:
+          type: string
+        Medicacao_adquirida:
+          type: object
+          properties:
+            ultima_data_prescricao:
+              type: string
+              format: date
+            Medicacao:
+              type: array
+              items:
+                type: object
+                properties:
+                  nome_medicacao:
+                    type: string
+                  Dosagem:
+                    type: string
+                  Proxima_data_medicacao:
+                    type: string
+                    format: date
+                  Doses_restantes:
+                    type: string
+
+    MedicationInfo: # Schema para informações de medicação
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        Nome:
+          type: string
+        Medicacao_adquirida:
+          type: object
+          properties:
+            ultima_data_prescricao:
+              type: string
+              format: date
+            Medicacao:
+              type: array
+              items:
+                type: object
+                properties:
+                  nome_medicacao:
+                    type: string
+                  Dosagem:
+                    type: string
+                  Proxima_data_medicacao:
+                    type: string
+                    format: date
+                  Doses_restantes:
+                    type: string
+servers:
+  - description: SwaggerHub API
+    url: https://virtserver.swaggerhub.com/FERRAZLUIZANA2110/Code_user/1.0.0
